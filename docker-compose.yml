@@ -85,6 +85,10 @@ services:
         condition: service_healthy
       schema-registry:
         condition: service_healthy
+      connect:
+        condition: service_healthy
+      ksqldb-server:
+        condition: service_healthy
     ports:
       - "9021:9021"
     environment:
@@ -158,6 +162,8 @@ services:
         condition: service_healthy
       schema-registry:
         condition: service_healthy
+      connect:
+        condition: service_healthy
     ports:
       - "8088:8088"
     environment:
@@ -179,18 +185,18 @@ services:
         test: [ "CMD", "curl", "-f", "http://localhost:8088/healthcheck" ]
         interval: 30s
         timeout: 30s
-        retries: 5
+        retries: 10
 
-#  ksqldb-cli:
-#    image: confluentinc/cp-ksqldb-cli:7.4.0
-#    container_name: ksqldb-cli
-#    depends_on:
-#      ksqldb-server:
-#        condition: service_healthy
-#    entrypoint: /bin/sh
-#    tty: true
-#    networks:
-#      - confluent
+  # ksqldb-cli:
+  #   image: confluentinc/cp-ksqldb-cli:7.4.0
+  #   container_name: ksqldb-cli
+  #   depends_on:
+  #     ksqldb-server:
+  #       condition: service_healthy
+  #   entrypoint: /bin/sh
+  #   tty: true
+  #   networks:
+  #     - confluent
 
 networks:
   confluent:
